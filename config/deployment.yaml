@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dv-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dv-app
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: dv-app
+    spec:
+      containers:
+        - name: dv-app
+          image: diops/otus-msa-hw1:1.0.2
+          ports:
+            - containerPort: 8000
+# add liveliness probe
